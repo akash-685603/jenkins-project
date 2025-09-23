@@ -5,9 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building Docker image..."
-                script {
-                    docker.build("jenkins-project:latest")
-                }
+                bat 'docker build -t jenkins-project:latest .'
             }
         }
 
@@ -21,18 +19,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "Deploying container..."
-                script {
-                    // Stop old container if exists
-                    try {
-                        docker.stop('jenkins-project-container')
-                        docker.rm('jenkins-project-container')
-                    } catch(Exception e) {
-                        echo "No old container to remove."
-                    }
-
-                    // Run new container
-                    docker.run('-d -p 3000:3000 --name jenkins-project-container jenkins-project:latest')
-                }
+                bat '''
+                docker stop jenkins-project-container || echo "No container to stop"
+                docker rm jenkins-project-container || echo "No container to remove"
+                docker run -d -p 3000:3000 --name jenkins-project-container jenkins-project:latest
+                '''
             }
         }
     }
