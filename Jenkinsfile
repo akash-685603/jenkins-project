@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building Docker image..."
-                bat 'docker build -t jenkins-project:latest .'
+                sh 'docker build -t jenkins-project:latest .'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "Deploying container..."
-                bat '''
+                sh '''
                 docker stop jenkins-project-container || echo "No container to stop"
                 docker rm jenkins-project-container || echo "No container to remove"
                 docker run -d -p 3000:3000 --name jenkins-project-container jenkins-project:latest
