@@ -12,7 +12,6 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Running basic test..."
-                // Add test commands here if needed
             }
         }
 
