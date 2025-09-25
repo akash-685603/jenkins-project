@@ -68,7 +68,7 @@ GitHub webhooks don’t work with plain localhost. You need ngrok or a cloud VM.
 
 docker.build requires the Docker Pipeline plugin; otherwise, just use sh "docker build …".
 
-Always run apt-get install as root, not as the default jenkins user.
+Always run apt-get install as root, not as the default Jenkins user.
 
 ⚡ **In short:**
 Your main blocker was Jenkins couldn’t find Docker, because you were running the vanilla Jenkins container without Docker CLI or socket. Once you fixed that with root + socket mount, the pipeline started behaving.
